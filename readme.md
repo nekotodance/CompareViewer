@@ -50,7 +50,7 @@ S,下      : 押している間だけ左右の画像を入れ替え
 左ドラッグ       : ウインドウを移動  
 
 ## 操作イメージ
-![Compareviewer-reference](docs/Compareviewer-reference.mp4)
+![Compareviewer-reference](docs/Compareviewer-reference.gif)
 
 動画では以下のような操作を行っています  
 - アプリを開きdocsフォルダ内の「001-modelA」と「003-modelB」の２つのフォルダ※1をドラッグ＆ドロップ  
