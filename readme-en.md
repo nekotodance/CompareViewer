@@ -4,7 +4,7 @@ CompareViewer is a tool to compare two images and preview them side by side.
 CompareViewer is a tool to compare two images created by StableDiffusion, such as model, Prompt, Prompt Strength, Lora, Seed number, etc., side by side.  
 It works with mouse or keyboard.  
 Supports jpg, png, webp files  
-! [CompareViewer-image](docs/CompareViewer-image.jpg)
+![CompareViewer-image](docs/CompareViewer-image.jpg)
 
 ## Features
 - Sequential preview of images in the same hierarchy with two images side by side  
@@ -48,7 +48,7 @@ Right button : Swap left and right images only while holding down the button.
 Drag left : Move the window.  
 
 ## Operation image
-! [Compareviewer-reference](docs/Compareviewer-reference.gif)
+![Compareviewer-reference](docs/Compareviewer-reference.gif)
 
 The video shows the following operation  
 - Open the application and drag & drop the two folders “001-modelA” and “003-modelB” *1 in the docs folder.  
