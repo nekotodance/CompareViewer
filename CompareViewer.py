@@ -17,6 +17,7 @@ GEOMETRY_X = "geometry-x"
 GEOMETRY_Y = "geometry-y"
 GEOMETRY_W = "geometry-w"
 GEOMETRY_H = "geometry-h"
+SUPPORT_EXT = [".png", ".jpg", ".jpeg", ".webp"]
 
 class CompareViewer(QMainWindow):
     def __init__(self):
@@ -193,8 +194,7 @@ class CompareViewer(QMainWindow):
 
     # 画像ファイルのリスト作成
     def get_image_files(self, directory):
-        image_extensions = [".png", ".jpg", ".jpeg", ".webp"]
-        return [os.path.join(directory, f).replace("\\", "/") for f in os.listdir(directory) if os.path.splitext(f)[1].lower() in image_extensions]
+        return [os.path.join(directory, f).replace("\\", "/") for f in os.listdir(directory) if os.path.splitext(f)[1].lower() in SUPPORT_EXT]
 
     # 画像の左右入れ替え
     def swap_image(self, isSwap):
@@ -339,6 +339,8 @@ class CompareViewer(QMainWindow):
             if not url: continue
             file_path = url.toLocalFile()
             if os.path.isfile(file_path):
+                if not any(file_path.lower().endswith(ext) for ext in SUPPORT_EXT):
+                    continue
                 self.image_dirs[i] = os.path.dirname(file_path)
                 self.image_paths[i] = self.get_image_files(self.image_dirs[i])
                 self.current_indices[i] = self.image_paths[i].index(file_path)
