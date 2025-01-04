@@ -1,4 +1,4 @@
-## About CompareViewer 0.1.0
+## About CompareViewer 0.1.1
 CompareViewer is a tool to compare two images and preview them side by side.  
 
 CompareViewer is a tool to compare two images created by StableDiffusion, such as model, Prompt, Prompt Strength, Lora, Seed number, etc., side by side.  
@@ -62,4 +62,5 @@ The video shows the following operation
 - None in particular.  
 
 ## Change history
+- 0.1.1 App icon settings
 - 0.1.0 First version  

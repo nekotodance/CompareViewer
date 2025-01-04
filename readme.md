@@ -1,6 +1,6 @@
 [README in English](readme-en.md)
 
-## CompareViewerについて 0.1.0
+## CompareViewerについて 0.1.1
 ２つの画像を比較しながらプレビューするツールです  
 
 StableDiffusionで作成したモデル、Prompt、Prompt強度、Lora、Seed番号違いなどの画像を左右に並べて見比べる事を目的としたツールです  
@@ -64,6 +64,7 @@ S,下      : 押している間だけ左右の画像を入れ替え
 - 特になし  
 
 ## 変更履歴
+- 0.1.1 アプリアイコンの設定   
 - 0.1.0 初版  
 
 以上

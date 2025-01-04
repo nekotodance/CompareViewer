@@ -1,7 +1,7 @@
 import sys
 import os
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QVBoxLayout, QWidget, QStatusBar, QHBoxLayout
-from PyQt5.QtGui import QPixmap, QCursor
+from PyQt5.QtGui import QPixmap, QCursor, QIcon
 from PyQt5.QtCore import Qt, QEvent, QPoint
 from PyQt5.QtMultimedia import QSound
 import pvsubfunc
@@ -92,6 +92,9 @@ class CompareViewer(QMainWindow):
         layout_statusbar.addStretch(1)
         layout_statusbar.addWidget(self.status_labels[1])
         self.status_bar.addPermanentWidget(self.layout_statusbar_widget, 1)  # stretch factor = 1
+
+        # アプリ左上のアイコンを設定
+        self.setWindowIcon(QIcon("res/CompareViewer.ico"))
 
         # ドラッグ＆ドロップ有効化
         self.setAcceptDrops(True)
