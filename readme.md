@@ -1,11 +1,12 @@
 [README in English](readme-en.md)
 
-## CompareViewerについて 0.1.1
+## CompareViewerについて 0.1.2
 ２つの画像を比較しながらプレビューするツールです  
 
 StableDiffusionで作成したモデル、Prompt、Prompt強度、Lora、Seed番号違いなどの画像を左右に並べて見比べる事を目的としたツールです  
 マウスもしくはキーボードで動作します  
 jpg, png, webpファイルの表示をサポートしています  
+
 ![CompareViewer-image](docs/CompareViewer-image.jpg)
 
 ## 特徴
@@ -14,7 +15,8 @@ jpg, png, webpファイルの表示をサポートしています
 - 画像２つの間違い探しなどにも利用可能  
 
 ## インストール方法（簡易）
-[簡易インストール版zipのダウンロード] https://github.com/nekotodance/CompareViewer/releases/download/latest/CompareViewer.zip
+[簡易インストール版zipのダウンロード]  
+https://github.com/nekotodance/CompareViewer/releases/download/latest/CompareViewer.zip
 
 - zipファイルを解凍
 - 解凍したフォルダ内の「CompareViewer-install.ps1」を右クリックして「PowerShellで実行」を選択
@@ -48,6 +50,7 @@ S,下      : 押している間だけ左右の画像を入れ替え
 ホイール操作     : 左右同時に同じフォルダ内の前後の画像に移動  
 右ボタン         : 押している間だけ左右の画像を入れ替え  
 左ドラッグ       : ウインドウを移動  
+左ダブルクリック  : 全画面表示に切り替え（トグル動作）  
 
 ## 操作イメージ
 ![Compareviewer-reference](docs/Compareviewer-reference.gif)
@@ -64,7 +67,8 @@ S,下      : 押している間だけ左右の画像を入れ替え
 - 特になし  
 
 ## 変更履歴
-- 0.1.1 アプリアイコンの設定   
+- 0.1.2 片側画像のみ表示時のウインドウサイズ変更不具合対応、ダブルクリック時の全画面化対応、他  
+- 0.1.1 アプリアイコンの設定  
 - 0.1.0 初版  
 
 以上

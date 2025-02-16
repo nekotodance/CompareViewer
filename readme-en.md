@@ -1,9 +1,10 @@
-## About CompareViewer 0.1.1
+## About CompareViewer 0.1.2
 CompareViewer is a tool to compare two images and preview them side by side.  
 
 CompareViewer is a tool to compare two images created by StableDiffusion, such as model, Prompt, Prompt Strength, Lora, Seed number, etc., side by side.  
 It works with mouse or keyboard.  
 Supports jpg, png, webp files  
+
 ![CompareViewer-image](docs/CompareViewer-image.jpg)
 
 ## Features
@@ -12,7 +13,8 @@ Supports jpg, png, webp files
 - Can also be used to find mistakes between two images.  
 
 ## How to install (simple)
-[Download the simple installation zip] https://github.com/nekotodance/CompareViewer/releases/download/latest/CompareViewer.zip
+[Download the simple installation zip]  
+https://github.com/nekotodance/CompareViewer/releases/download/latest/CompareViewer.zip
 
 - Extract the zip file
 - Right-click “CompareViewer-install.ps1” in the extracted folder and select “Run with PowerShell
@@ -46,6 +48,7 @@ S, Down : Switches left and right images only while being pressed.
 Wheel operation : Move left and right simultaneously to the previous and next images in the same folder.  
 Right button : Swap left and right images only while holding down the button.  
 Drag left : Move the window.  
+Left double-click : Switch to full screen (toggle action)  
 
 ## Operation image
 ![Compareviewer-reference](docs/Compareviewer-reference.gif)
@@ -62,5 +65,6 @@ The video shows the following operation
 - None in particular.  
 
 ## Change history
-- 0.1.1 App icon settings
+- 0.1.2 Fixed a window resizing bug when displaying only one-sided images, full-screen mode when double-clicking, etc  
+- 0.1.1 App icon settings  
 - 0.1.0 First version  

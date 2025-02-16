@@ -18,6 +18,10 @@ GEOMETRY_Y = "geometry-y"
 GEOMETRY_W = "geometry-w"
 GEOMETRY_H = "geometry-h"
 SUPPORT_EXT = [".png", ".jpg", ".jpeg", ".webp"]
+# dummy画像（片側のみしか表示されていない場合のウインドウサイズ変更対応）
+DUMMY_IMAGES = ["dummy-left.jpg", "dummy-right.jpg"]
+# 背景カラーも左右を入れ替えるように対応
+BACK_COLORS = ["background-color: #222222;", "background-color: #111111;"]
 
 class CompareViewer(QMainWindow):
     def __init__(self):
@@ -61,8 +65,8 @@ class CompareViewer(QMainWindow):
 
         # 画像表示用ラベル
         self.image_labels = [QLabel(self) for _ in range(2)]
-        self.image_labels[0].setStyleSheet("background-color: #222222;")
-        self.image_labels[1].setStyleSheet("background-color: #111111;")
+        self.image_labels[0].setStyleSheet(BACK_COLORS[0])
+        self.image_labels[1].setStyleSheet(BACK_COLORS[1])
         for label in self.image_labels:
             label.setAlignment(Qt.AlignCenter)
             self.layout.addWidget(label)
@@ -134,17 +138,14 @@ class CompareViewer(QMainWindow):
     def update_image(self):
         for i, label_index in enumerate(self.temp_order):
             label = self.image_labels[label_index]
+
             if self.image_paths[i] and self.current_indices[i] < len(self.image_paths[i]):
                 pixmap = QPixmap(self.image_paths[i][self.current_indices[i]])
-                sizeself = self.size()
-                sizeself_half = sizeself
-                sizeself_half = sizeself_half.setWidth(sizeself.width() // 2)
-                sizecentral = self.centralWidget.size()
-                sizecontentsRect = label.contentsRect().size()
-
-                sizeimglabel = label.size()
-                imgsize = sizeimglabel
-                label.setPixmap(pixmap.scaled(imgsize, Qt.KeepAspectRatio, Qt.SmoothTransformation))
+            else:
+                pixmap = QPixmap(DUMMY_IMAGES[i])
+            imgsize = label.size()
+            label.setPixmap(pixmap.scaled(imgsize, Qt.KeepAspectRatio, Qt.SmoothTransformation))
+            self.image_labels[i].setStyleSheet(BACK_COLORS[label_index])
         self.update_status_bar()
 
     # ステータスバーの更新
@@ -205,7 +206,9 @@ class CompareViewer(QMainWindow):
             self.temp_order = [1, 0]
         else:
             self.temp_order = [0, 1]
+        pvsubfunc.dbgprint(f"[DBG] update_image - start")
         self.update_image()
+        pvsubfunc.dbgprint(f"[DBG] update_image - end")
 
     # 現在のカーソル位置（ウインドウ内の相対位置）を取得
     def get_mouse_pos(self):
@@ -386,6 +389,11 @@ class CompareViewer(QMainWindow):
             self.dragging = False
         elif event.button() == Qt.RightButton:
             self.swap_image(False)
+    #ダブルクリック時に全画面切り替え
+    def mouseDoubleClickEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self.toggleFullscreen()
+        super().mouseDoubleClickEvent(event)
 
     # アプリ終了時
     def closeEvent(self, event):
