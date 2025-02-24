@@ -282,8 +282,12 @@ class CompareViewer(QMainWindow):
     def keyPressEvent(self, event):
         keyid = event.key()
         pvsubfunc.dbgprint(f"[DBG] key press id : {keyid}")
+        #Ctrlキー併用は別で処理する
+        if event.modifiers() & Qt.ControlModifier:
+            if keyid in {Qt.Key_W}:
+                self.appexit()
         # 次のイメージへ
-        if keyid in {Qt.Key_D, Qt.Key_Right}:
+        elif keyid in {Qt.Key_D, Qt.Key_Right}:
             self.navigate_images(1)
         # 前のイメージへ
         elif keyid in {Qt.Key_A, Qt.Key_Left}:

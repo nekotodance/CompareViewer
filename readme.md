@@ -1,9 +1,8 @@
 [README in English](readme-en.md)
 
-## CompareViewerについて 0.1.2
+## CompareViewerについて 0.1.3
 ２つの画像を比較しながらプレビューするツールです  
-
-StableDiffusionで作成したモデル、Prompt、Prompt強度、Lora、Seed番号違いなどの画像を左右に並べて見比べる事を目的としたツールです  
+StableDiffusionで作成したPrompt、モデル、Lora、Seed、強度違いなどの画像を左右に並べて見比べる事を目的としたツールです  
 マウスもしくはキーボードで動作します  
 jpg, png, webpファイルの表示をサポートしています  
 
@@ -29,10 +28,14 @@ https://github.com/nekotodance/CompareViewer/releases/download/latest/CompareVie
 リンクファイルをダブルクリックで起動できます
 
 ## インストール方法（手動）
-#### 必要なライブラリ
-    PyQt5 Image
-#### 動作確認
-    py CompareViewer.py
+- Pythonのインストール（SD標準の3.10.6推奨）  
+- gitのインストール  
+- gitでリポジトリを取得  
+    git clone https://github.com/nekotodance/CompareViewer
+- 必要なライブラリ  
+    pip install PyQt5 Image
+- 実行方法  
+    Python CompareViewer.py
 
 ## 利用方法
 アプリ上に画像ファイル、もしくは画像ファイルが入ったフォルダをドラッグ＆ドロップしてください  
@@ -61,12 +64,13 @@ S,下      : 押している間だけ左右の画像を入れ替え
 - Sもしくは下キーで左右の画像を入れ替えて変化点をチェック  
 - Dもしくは右キー、マウスホイールでフォルダ内を一巡りするまで進む  
 
-※1:docsフォルダ内の参考画像は同じプロンプトで違うモデルで出力した画像ファイルとなります。
+※1:docsフォルダ内の参考画像は同一プロンプトを違うモデルにて出力した画像ファイル
 
 ## 注意事項
 - 特になし  
 
 ## 変更履歴
+- 0.1.3 コントロールキー併用動作を追加、readmeの修正  
 - 0.1.2 片側画像のみ表示時のウインドウサイズ変更不具合対応、ダブルクリック時の全画面化対応、他  
 - 0.1.1 アプリアイコンの設定  
 - 0.1.0 初版  

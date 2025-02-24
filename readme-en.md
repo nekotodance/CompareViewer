@@ -1,7 +1,6 @@
-## About CompareViewer 0.1.2
+## About CompareViewer 0.1.3
 CompareViewer is a tool to compare two images and preview them side by side.  
-
-CompareViewer is a tool to compare two images created by StableDiffusion, such as model, Prompt, Prompt Strength, Lora, Seed number, etc., side by side.  
+This tool is designed to compare images created with StableDiffusion, such as Prompt, Model, Lora, Seed, and Strength, side by side.  
 It works with mouse or keyboard.  
 Supports jpg, png, webp files  
 
@@ -27,10 +26,14 @@ If not, type “n” and press “enter
 Double-click the link file to start it.
 
 ## How to install (manually)
-#### Required Libraries
-    PyQt5 Image
-#### Check it works
-    py CompareViewer.py
+- Python installation (SD standard 3.10.6 recommended)  
+- Install git  
+- Get repository with git  
+    git clone https://github.com/nekotodance/CompareViewer
+- Required libraries  
+    pip install PyQt5 Image
+- How to run  
+    Python CompareViewer.py
 
 ## How to use
 Drag and drop an image file or a folder containing image files onto the application.  
@@ -59,12 +62,13 @@ The video shows the following operation
 - Switch the left and right images by pressing S or the down key and check the change point  
 - Press D or right key and mouse wheel to go all the way through the folder  
 
-*1: The reference images in the docs folder are image files output with different models at the same prompt.
+*1: The reference images in the docs folder are image files of the same prompt output with different models
 
 ## Notes.
 - None in particular.  
 
 ## Change history
+- 0.1.3 Added control key combination operation, modified readme  
 - 0.1.2 Fixed a window resizing bug when displaying only one-sided images, full-screen mode when double-clicking, etc  
 - 0.1.1 App icon settings  
 - 0.1.0 First version  
