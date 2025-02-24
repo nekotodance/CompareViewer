@@ -17,7 +17,8 @@ jpg, png, webpファイルの表示をサポートしています
 [簡易インストール版zipのダウンロード]  
 https://github.com/nekotodance/CompareViewer/releases/download/latest/CompareViewer.zip
 
-- zipファイルを解凍
+- Pythonのインストール（SD標準の3.10.6推奨）  
+- zipファイルを解凍  
 - 解凍したフォルダ内の「CompareViewer-install.ps1」を右クリックして「PowerShellで実行」を選択
 - イントールの最後にデスクトップにリンクをコピーするかどうかを聞いてきます  
 「"Do you want to copy the shortcut to your desktop? (y or enter/n)」  

@@ -15,7 +15,8 @@ Supports jpg, png, webp files
 [Download the simple installation zip]  
 https://github.com/nekotodance/CompareViewer/releases/download/latest/CompareViewer.zip
 
-- Extract the zip file
+- Python installation (SD standard 3.10.6 recommended)  
+- Extract the zip file  
 - Right-click “CompareViewer-install.ps1” in the extracted folder and select “Run with PowerShell
 - At the end of the install, it will ask if you want to copy the link to your desktop  
 At the end of the install, it will ask if you want to copy the shortcut to your desktop.  
