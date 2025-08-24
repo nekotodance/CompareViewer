@@ -1,8 +1,8 @@
 import sys
 import os
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QVBoxLayout, QWidget, QStatusBar, QHBoxLayout
-from PyQt5.QtGui import QPixmap, QCursor, QIcon
-from PyQt5.QtCore import Qt, QEvent, QPoint
+from PyQt5.QtGui import QPixmap, QCursor, QIcon, QMovie, QImageReader
+from PyQt5.QtCore import Qt, QEvent, QPoint, QSize
 from PyQt5.QtMultimedia import QSound
 import pvsubfunc
 
@@ -70,6 +70,9 @@ class CompareViewer(QMainWindow):
         for label in self.image_labels:
             label.setAlignment(Qt.AlignCenter)
             self.layout.addWidget(label)
+
+        #webp再生用QMovie
+        self.webpmovie = None   # 画像表示でwebpだった場合のプレイヤー
 
         # ステータスバー
         self.status_bar = QStatusBar()
@@ -145,6 +148,17 @@ class CompareViewer(QMainWindow):
                 pixmap = QPixmap(DUMMY_IMAGES[i])
             imgsize = label.size()
             label.setPixmap(pixmap.scaled(imgsize, Qt.KeepAspectRatio, Qt.SmoothTransformation))
+
+            if self.image_paths[i]:
+                fname = self.image_paths[i][self.current_indices[i]]
+                if fname.lower().endswith(".webp"):
+                    self.webpmovie = QMovie(fname)
+                    label.setMovie(self.webpmovie)
+                    self.webpmovie.setScaledSize(self.get_fit_size(QImageReader(fname).size(), label.size()))
+                    self.webpmovie.start()
+            else:
+                self.webpmovie = None
+
             self.image_labels[i].setStyleSheet(BACK_COLORS[label_index])
         self.update_status_bar()
 
@@ -274,6 +288,21 @@ class CompareViewer(QMainWindow):
         self.fullscreen = not self.fullscreen
         self.show()     #ウィジェットが表示/非表示などを切り替える場合など
         self.update_image()
+
+    # webpを再生中なら停止する
+    def stop_WEbpMovie(self):
+        if self.webpmovie != None:
+            self.webpmovie.stop()
+            self.webpmovie = None
+
+    # 元のサイズをターゲットサイズにフィットさせた場合のサイズを取得
+    def get_fit_size(self, size_org, size_target):
+        scaled_width = size_target.width()
+        scaled_height = int(size_org.height() * (scaled_width / size_org.width()))
+        if scaled_height > size_target.height():
+            scaled_height = size_target.height()
+            scaled_width = int(size_org.width() * (scaled_height / size_org.height()))
+        return QSize(scaled_width,scaled_height)
 
     #========================================
     #= キーイベント処理
