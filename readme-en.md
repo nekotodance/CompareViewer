@@ -1,4 +1,4 @@
-## About CompareViewer 0.1.4
+## About CompareViewer 0.1.5
 CompareViewer is a tool to compare two images and preview them side by side.  
 This tool is designed to compare images created with StableDiffusion, such as Prompt, Model, Lora, Seed, and Strength, side by side.  
 It works with mouse or keyboard.  
@@ -69,7 +69,8 @@ The video shows the following operation
 - None in particular.  
 
 ## Change history
-- 0.1.4 Temporary support for webp animation
+- 0.1.5 Fixed pip library version, minor fixes  
+- 0.1.4 Temporary support for webp animation  
 - 0.1.3 Added control key combination operation, modified readme  
 - 0.1.2 Fixed a window resizing bug when displaying only one-sided images, full-screen mode when double-clicking, etc  
 - 0.1.1 App icon settings  

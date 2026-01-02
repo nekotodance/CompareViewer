@@ -7,7 +7,7 @@ from PyQt5.QtMultimedia import QSound
 import pvsubfunc
 
 # アプリ名称
-WINDOW_TITLE = "Compare Viewer"
+WINDOW_TITLE = "Compare Viewer 0.1.5"
 # 設定ファイル
 SETTINGS_FILE = "CompareViewer_settings.json"
 # 設定ファイルのキー名
@@ -166,16 +166,21 @@ class CompareViewer(QMainWindow):
     def update_status_bar(self):
         paths = [self.image_paths[i][self.current_indices[i]] if self.image_paths[i] else "" for i in range(2)]
         deftexts = ["left", "right"]
+        posinfos = ["", ""]
         for i, label_index in enumerate(self.temp_order):
             label = self.status_labels[label_index]
             if paths[i]:
                 imgpos = str(self.current_indices[i] + 1).rjust(self.imagefiles_digits, " ")
                 imgnum = str(len(self.image_paths[i])).rjust(self.imagefiles_digits, " ")
                 posinfo = f"[{imgpos}/{imgnum}]"
+                posinfos[label_index] = posinfo
                 fileinfo = f"{self.getParentDir(paths[i])}/{os.path.basename(paths[i])}"
                 label.setText(f"{posinfo} {fileinfo}")
             else:
                 label.setText(deftexts[i])
+
+        # ファイルのインデックスをWindowタイトル部分に表示
+        self.setWindowTitle(f"{posinfos[0]}, {posinfos[1]}")
         self.update()
 
     # 親ディレクトリ名の取得
