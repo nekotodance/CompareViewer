@@ -32,6 +32,7 @@ class CompareViewer(QMainWindow):
         # 変数
         self.image_paths = [None, None]
         self.image_dirs = [None, None]
+        self.image_sizestr = [None, None]
         self.imagefiles_digits = 1      # ファイル総数の桁数
         self.current_indices = [0, 0]
         self.temp_order = [0, 1]        # 画像の左右入れ替え様
@@ -144,8 +145,10 @@ class CompareViewer(QMainWindow):
 
             if self.image_paths[i] and self.current_indices[i] < len(self.image_paths[i]):
                 pixmap = QPixmap(self.image_paths[i][self.current_indices[i]])
+                self.image_sizestr[i] = f"{pixmap.width()}x{pixmap.height()}"
             else:
                 pixmap = QPixmap(DUMMY_IMAGES[i])
+                self.image_sizestr[i] = f""
             imgsize = label.size()
             label.setPixmap(pixmap.scaled(imgsize, Qt.KeepAspectRatio, Qt.SmoothTransformation))
 
@@ -172,7 +175,7 @@ class CompareViewer(QMainWindow):
             if paths[i]:
                 imgpos = str(self.current_indices[i] + 1).rjust(self.imagefiles_digits, " ")
                 imgnum = str(len(self.image_paths[i])).rjust(self.imagefiles_digits, " ")
-                posinfo = f"[{imgpos}/{imgnum}]"
+                posinfo = f"[{imgpos}/{imgnum}] {self.image_sizestr[i]}"
                 posinfos[label_index] = posinfo
                 fileinfo = f"{self.getParentDir(paths[i])}/{os.path.basename(paths[i])}"
                 label.setText(f"{posinfo} {fileinfo}")
