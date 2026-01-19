@@ -69,7 +69,7 @@ The video shows the following operation
 - None in particular.  
 
 ## Change history
-- 0.1.6 Display image size
+- 0.1.6 Display image size, minor fixes  
 - 0.1.5 Fixed pip library version, minor fixes  
 - 0.1.4 Temporary support for webp animation  
 - 0.1.3 Added control key combination operation, modified readme  

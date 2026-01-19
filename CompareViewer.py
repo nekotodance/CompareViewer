@@ -183,7 +183,8 @@ class CompareViewer(QMainWindow):
                 label.setText(deftexts[i])
 
         # ファイルのインデックスをWindowタイトル部分に表示
-        self.setWindowTitle(f"{posinfos[0]}, {posinfos[1]}")
+        if posinfos[0] or posinfos[1]:
+            self.setWindowTitle(f"{posinfos[0]}, {posinfos[1]}")
         self.update()
 
     # 親ディレクトリ名の取得
