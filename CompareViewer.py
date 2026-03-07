@@ -7,7 +7,7 @@ from PyQt5.QtMultimedia import QSound
 import pvsubfunc
 
 # アプリ名称
-WINDOW_TITLE = "Compare Viewer 0.1.5"
+WINDOW_TITLE = "Compare Viewer 0.1.7"
 # 設定ファイル
 SETTINGS_FILE = "CompareViewer_settings.json"
 # 設定ファイルのキー名
@@ -191,11 +191,12 @@ class CompareViewer(QMainWindow):
     def getParentDir(self, path):
         return os.path.basename(os.path.dirname(path))
 
-    # 前後の画像処理
-    def navigate_images(self, step):
+    # 前後の画像処理（左右別の指定）
+    def navigate_images_lr(self, stepl, stepr):
+        steps = [stepl, stepr]
         for i in range(2):
             if self.image_paths[i]:
-                self.current_indices[i] = (self.current_indices[i] + step) % len(self.image_paths[i])
+                self.current_indices[i] = (self.current_indices[i] + steps[i]) % len(self.image_paths[i])
         self.update_image()
         #ループ時サウンド（左優先、左に画像が無いもしくは1ファイルのみ場合のみ右で判定）
         target = 0
@@ -205,10 +206,14 @@ class CompareViewer(QMainWindow):
             target = 1
         if self.image_paths[target]:
             if len(self.image_paths[target]) > 1:
-                if self.current_indices[target] == 0 and step == 1:
+                if self.current_indices[target] == 0 and steps[target] == 1:
                     self.play_wave(self.soundMoveTop)
-                if self.current_indices[target] == (len(self.image_paths[target]) - 1) and step == -1:
+                if self.current_indices[target] == (len(self.image_paths[target]) - 1) and steps[target] == -1:
                     self.play_wave(self.soundMoveEnd)
+
+    # 前後の画像処理
+    def navigate_images(self, step):
+        self.navigate_images_lr(step, step)
 
     # wavファイルの再生
     def play_wave(self, file_name):
@@ -330,6 +335,12 @@ class CompareViewer(QMainWindow):
         # 前のイメージへ
         elif keyid in {Qt.Key_A, Qt.Key_Left}:
             self.navigate_images(-1)
+        # 左だけ次のイメージへ（右が左側の一部画像を想定）
+        elif keyid in {Qt.Key_C}:
+            self.navigate_images_lr(1, 0)
+        # 左だけ前のイメージへ（右が左側の一部画像を想定）
+        elif keyid in {Qt.Key_Z}:
+            self.navigate_images_lr(-1, 0)
         # 左右入れ替え
         elif keyid in {Qt.Key_S, Qt.Key_Down}:
             self.swap_image(True)

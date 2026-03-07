@@ -1,4 +1,4 @@
-## About CompareViewer 0.1.6
+## About CompareViewer 0.1.7
 CompareViewer is a tool to compare two images and preview them side by side.  
 This tool is designed to compare images created with StableDiffusion, such as Prompt, Model, Lora, Seed, and Strength, side by side.  
 It works with mouse or keyboard.  
@@ -47,6 +47,10 @@ Q,ESC : Exit
 0,1,2 : Toggle between 0:1/2, 1:Equal, 2:2 times the image size and the currently saved window size (toggle operation)  
 Enter : Toggles to full screen display (toggle action)  
 S, Down : Switches left and right images only while being pressed.  
+ZC      : Move only left side to previous/next images in same folder (*1)  
+
+*1: Use when left side has more images than right side  
+For example, when comparing image D in a scenario where the left side has images A, B, C, D, E, but the right side only has images A, B, D.  
 
 #### Mouse operation
 Wheel operation : Move left and right simultaneously to the previous and next images in the same folder.  
@@ -58,17 +62,18 @@ Left double-click : Switch to full screen (toggle action)
 ![Compareviewer-reference](docs/Compareviewer-reference.gif)
 
 The video shows the following operation  
-- Open the application and drag & drop the two folders “001-modelA” and “003-modelB” *1 in the docs folder.  
+- Open the application and drag & drop the two folders “001-modelA” and “003-modelB” (*2) in the docs folder.  
 - D or right key and mouse wheel to advance to the 4th image  
 - Switch the left and right images by pressing S or the down key and check the change point  
 - Press D or right key and mouse wheel to go all the way through the folder  
 
-*1: The reference images in the docs folder are image files of the same prompt output with different models
+*2: The reference images in the docs folder are image files of the same prompt output with different models
 
 ## Notes.
 - None in particular.  
 
 ## Change history
+- 0.1.7 Added functionality to navigate between images only on the left side  
 - 0.1.6 Display image size, minor fixes  
 - 0.1.5 Fixed pip library version, minor fixes  
 - 0.1.4 Temporary support for webp animation  
