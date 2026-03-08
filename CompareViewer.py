@@ -5,9 +5,10 @@ from PyQt5.QtGui import QPixmap, QCursor, QIcon, QMovie, QImageReader
 from PyQt5.QtCore import Qt, QEvent, QPoint, QSize
 from PyQt5.QtMultimedia import QSound
 import pvsubfunc
+from natsort import os_sorted
 
 # アプリ名称
-WINDOW_TITLE = "Compare Viewer 0.1.7"
+WINDOW_TITLE = "Compare Viewer 0.1.8"
 # 設定ファイル
 SETTINGS_FILE = "CompareViewer_settings.json"
 # 設定ファイルのキー名
@@ -226,7 +227,9 @@ class CompareViewer(QMainWindow):
 
     # 画像ファイルのリスト作成
     def get_image_files(self, directory):
-        return [os.path.join(directory, f).replace("\\", "/") for f in os.listdir(directory) if os.path.splitext(f)[1].lower() in SUPPORT_EXT]
+        files = [os.path.join(directory, f).replace("\\", "/") for f in os.listdir(directory) if os.path.splitext(f)[1].lower() in SUPPORT_EXT]
+        files = os_sorted(files)
+        return files
 
     # 画像の左右入れ替え
     def swap_image(self, isSwap):
