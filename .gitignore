@@ -1,6 +1,6 @@
 CompareViewer.lnk
 CompareViewer_settings.xcf
-CompareViewer_settings.json
+CompareViewer*.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
