@@ -8,7 +8,7 @@ import pvsubfunc
 from natsort import os_sorted
 
 # アプリ名称
-WINDOW_TITLE = "Compare Viewer Multi 0.1.1"
+WINDOW_TITLE = "Compare Viewer Multi 0.1.2"
 # 設定ファイル
 SETTINGS_FILE = "CompareViewerMulti_settings.json"
 # 設定ファイルのキー名
@@ -199,6 +199,8 @@ class CompareViewer(QMainWindow):
             elif key == Qt.Key_B:
                 mapping[4], mapping[5] = mapping[5], mapping[4]
         return mapping
+    def getParentDir(self, path):
+        return os.path.basename(os.path.dirname(path))
 
     def toggle_auto_play(self):
         if self.auto_timer.isActive():
@@ -259,15 +261,16 @@ class CompareViewer(QMainWindow):
             data_idx = mapping[slot_idx]
             label = self.status_labels[slot_idx]
             if self.image_paths[data_idx]:
+                fpath = self.image_paths[data_idx][self.current_indices[data_idx]]
                 imgpos = str(self.current_indices[data_idx] + 1).rjust(self.imagefiles_digits, " ")
                 imgnum = str(len(self.image_paths[data_idx])).rjust(self.imagefiles_digits, " ")
                 posinfo = f"[{imgpos}/{imgnum}] {self.image_sizestr[data_idx]}"
-                fileinfo = os.path.basename(self.image_paths[data_idx][self.current_indices[data_idx]])
+                fileinfo = f"{self.getParentDir(fpath)}/{os.path.basename(fpath)}"
                 label.setText(f"{posinfo} {fileinfo}")
             else:
                 label.setText(f"slot {slot_idx+1}")
 
-        valid_titles = [f"[{slot_idx+1}: {os.path.basename(self.image_paths[mapping[slot_idx]][self.current_indices[mapping[slot_idx]]])}]" for slot_idx in range(self.visible_count) if self.image_paths[mapping[slot_idx]]]
+        valid_titles = [f"[{slot_idx+1}: {self.getParentDir(self.image_paths[mapping[slot_idx]][self.current_indices[mapping[slot_idx]]])}/{os.path.basename(self.image_paths[mapping[slot_idx]][self.current_indices[mapping[slot_idx]]])}]" for slot_idx in range(self.visible_count) if self.image_paths[mapping[slot_idx]]]
         base_title = " - ".join(valid_titles) if valid_titles else WINDOW_TITLE
 
         status_suffix = f" [Auto: {self.auto_interval}s {'ON' if self.auto_timer.isActive() else 'OFF'}]"
@@ -336,13 +339,33 @@ class CompareViewer(QMainWindow):
             self.fitscreen = 1
             self.screenWidth, self.screenHeight = self.width(), self.height()
             pixmap = QPixmap(self.image_paths[target][self.current_indices[target]])
-            lw, lh = pixmap.width(), pixmap.height()
-            correct_height = self.screenHeight - self.centralWidget.height()
+            org_w, org_h = pixmap.width(), pixmap.height()
 
-            lw = lw * self.visible_count
+            correct_height = self.height() - self.centralWidget.height()
+
+            # 現在のウィンドウが属するモニタ（画面）の有効領域を取得
+            screen = QApplication.screenAt(self.pos())
+            if screen is None:
+                screen = QApplication.primaryScreen()
+            max_w = screen.availableGeometry().width()
+
+            # 全スロットを並べた場合の希望横幅
+            desired_w = org_w * self.visible_count
+
+            # モニタの画面幅を超える場合は、モニタ幅に収まるよう横幅を制限し、縦幅を等倍縮小する
+            if desired_w > max_w:
+                lw = max_w
+                # 1スロットあたりの幅から、縮小された画像高さを逆算
+                slot_w = max_w / self.visible_count
+                lh = int(org_h * (slot_w / org_w))
+            else:
+                lw = desired_w
+                lh = org_h
+
             lw = max(lw, 400)
-            lh += correct_height
-            self.resize(lw, lh)
+            target_height = lh + correct_height
+
+            self.resize(lw, target_height)
         else:
             self.fitscreen = -1
             self.resize(self.screenWidth, self.screenHeight)
