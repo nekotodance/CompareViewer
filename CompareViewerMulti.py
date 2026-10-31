@@ -8,7 +8,7 @@ import pvsubfunc
 from natsort import os_sorted
 
 # アプリ名称
-WINDOW_TITLE = "Compare Viewer Multi 0.1.3"
+WINDOW_TITLE = "Compare Viewer Multi 0.1.4"
 # 設定ファイル
 SETTINGS_FILE = "CompareViewerMulti_settings.json"
 # 設定ファイルのキー名
@@ -432,7 +432,43 @@ class CompareViewer(QMainWindow):
             self.toggleFullscreen()
         elif keyid in {Qt.Key_Escape, Qt.Key_Q, Qt.Key_Slash, Qt.Key_Backslash}:
             self.appexit()
+
+        elif Qt.Key_F1 <= keyid <= Qt.Key_F6:
+            sizes = [
+                (1024, 640),
+                (1280, 800),
+                (1600, 1000),
+                (1920, 1200),
+                (2560, 1600),
+                (3200, 1800),
+            ]
+            num = keyid - Qt.Key_F1
+            width, height = sizes[num]
+            self.setWindowSize(width, height)
+            return
+
         super().keyPressEvent(event)
+
+    def setWindowSize(self, w, h):
+        title_bar_height = self.frameGeometry().height() - self.geometry().height()
+        status_bar_height = self.statusBar().height() if self.statusBar() else 0
+        total_h = h + title_bar_height + status_bar_height
+        self.resize(w, total_h)
+
+        # 画面内に収まるように位置を調整
+        screen_geometry = QApplication.desktop().availableGeometry(self)
+        current_geo = self.frameGeometry()
+        x = current_geo.x()
+        y = current_geo.y()
+        if x + current_geo.width() > screen_geometry.right():
+            x = screen_geometry.right() - current_geo.width()
+        if x < screen_geometry.left():
+            x = screen_geometry.left()
+        if y + current_geo.height() > screen_geometry.bottom():
+            y = screen_geometry.bottom() - current_geo.height()
+        if y < screen_geometry.top():
+            y = screen_geometry.top()
+        self.move(x, y)
 
     def keyReleaseEvent(self, event):
         keyid = event.key()
