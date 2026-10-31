@@ -8,7 +8,7 @@ import pvsubfunc
 from natsort import os_sorted
 
 # アプリ名称
-WINDOW_TITLE = "Compare Viewer Multi 0.1.2"
+WINDOW_TITLE = "Compare Viewer Multi 0.1.3"
 # 設定ファイル
 SETTINGS_FILE = "CompareViewerMulti_settings.json"
 # 設定ファイルのキー名
@@ -426,7 +426,7 @@ class CompareViewer(QMainWindow):
             self.change_auto_interval(-1)
         elif keyid == Qt.Key_BracketRight:
             self.change_auto_interval(1)
-        elif keyid == Qt.Key_F:
+        elif keyid in {Qt.Key_1, Qt.Key_F}:
             self.toggleFitScreen()
         elif keyid in {Qt.Key_Enter, Qt.Key_Return}:
             self.toggleFullscreen()
