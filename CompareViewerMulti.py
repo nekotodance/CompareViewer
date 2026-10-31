@@ -8,7 +8,7 @@ import pvsubfunc
 from natsort import os_sorted
 
 # アプリ名称
-WINDOW_TITLE = "Compare Viewer Multi 0.1.4"
+WINDOW_TITLE = "Compare Viewer Multi 0.1.5"
 # 設定ファイル
 SETTINGS_FILE = "CompareViewerMulti_settings.json"
 # 設定ファイルのキー名
@@ -22,16 +22,17 @@ AUTO_INTERVAL = "auto-interval"
 VISIBLE_COUNT = "visible-count"
 
 SUPPORT_EXT = [".png", ".jpg", ".jpeg", ".webp"]
-MAX_VIEW = 6
+MAX_VIEW = 7
 
 # 背景カラーをスロットごとに変更
 BACK_COLORS = [
-    "background-color: #222222;",
-    "background-color: #161616;",
-    "background-color: #1c1c1c;",
-    "background-color: #0d0d0d;",
+    "background-color: #202020;",
+    "background-color: #1D1D1D;",
+    "background-color: #1A1A1A;",
+    "background-color: #171717;",
+    "background-color: #141414;",
     "background-color: #111111;",
-    "background-color: #080808;"
+    "background-color: #0E0E0E;"
 ]
 
 class CompareViewer(QMainWindow):
@@ -198,6 +199,8 @@ class CompareViewer(QMainWindow):
                 mapping[3], mapping[4] = mapping[4], mapping[3]
             elif key == Qt.Key_B:
                 mapping[4], mapping[5] = mapping[5], mapping[4]
+            elif key == Qt.Key_N:
+                mapping[5], mapping[6] = mapping[6], mapping[5]
         return mapping
     def getParentDir(self, path):
         return os.path.basename(os.path.dirname(path))
@@ -370,6 +373,8 @@ class CompareViewer(QMainWindow):
             self.fitscreen = -1
             self.resize(self.screenWidth, self.screenHeight)
 
+        self.move_in_display()
+
     def toggleFullscreen(self):
         if self.fullscreen:
             self.showNormal()
@@ -400,18 +405,11 @@ class CompareViewer(QMainWindow):
             self.navigate_images(1)
         elif keyid in {Qt.Key_A, Qt.Key_Left}:
             self.navigate_images(-1)
-        elif keyid == Qt.Key_2:
-            self.set_split_count(2)
-        elif keyid == Qt.Key_3:
-            self.set_split_count(3)
-        elif keyid == Qt.Key_4:
-            self.set_split_count(4)
-        elif keyid == Qt.Key_5:
-            self.set_split_count(5)
-        elif keyid == Qt.Key_6:
-            self.set_split_count(6)
+        elif keyid in {Qt.Key_2, Qt.Key_3, Qt.Key_4, Qt.Key_5, Qt.Key_6, Qt.Key_7}:
+            numsplit = (keyid - Qt.Key_2) + 2
+            self.set_split_count(numsplit)
         # ZXCVBキー押下 (押し順ケア対応)
-        elif keyid in {Qt.Key_Z, Qt.Key_X, Qt.Key_C, Qt.Key_V, Qt.Key_B} and not event.isAutoRepeat():
+        elif keyid in {Qt.Key_Z, Qt.Key_X, Qt.Key_C, Qt.Key_V, Qt.Key_B, Qt.Key_N} and not event.isAutoRepeat():
             if keyid not in self.active_swap_keys:
                 self.active_swap_keys.append(keyid)
                 self.update_image()
@@ -454,25 +452,28 @@ class CompareViewer(QMainWindow):
         status_bar_height = self.statusBar().height() if self.statusBar() else 0
         total_h = h + title_bar_height + status_bar_height
         self.resize(w, total_h)
+        self.move_in_display()
 
-        # 画面内に収まるように位置を調整
+    def move_in_display(self):
         screen_geometry = QApplication.desktop().availableGeometry(self)
         current_geo = self.frameGeometry()
-        x = current_geo.x()
-        y = current_geo.y()
-        if x + current_geo.width() > screen_geometry.right():
-            x = screen_geometry.right() - current_geo.width()
+        # 画面中央に配置する座標を計算
+        x = screen_geometry.x() + (screen_geometry.width() - current_geo.width()) // 2
+        y = screen_geometry.y() + (screen_geometry.height() - current_geo.height()) // 2
+        # 画面内に収まるように位置を調整
         if x < screen_geometry.left():
             x = screen_geometry.left()
-        if y + current_geo.height() > screen_geometry.bottom():
-            y = screen_geometry.bottom() - current_geo.height()
+        elif x + current_geo.width() > screen_geometry.right():
+            x = screen_geometry.right() - current_geo.width()
         if y < screen_geometry.top():
             y = screen_geometry.top()
+        elif y + current_geo.height() > screen_geometry.bottom():
+            y = screen_geometry.bottom() - current_geo.height()
         self.move(x, y)
 
     def keyReleaseEvent(self, event):
         keyid = event.key()
-        if keyid in {Qt.Key_Z, Qt.Key_X, Qt.Key_C, Qt.Key_V, Qt.Key_B} and not event.isAutoRepeat():
+        if keyid in {Qt.Key_Z, Qt.Key_X, Qt.Key_C, Qt.Key_V, Qt.Key_B, Qt.Key_N} and not event.isAutoRepeat():
             if keyid in self.active_swap_keys:
                 self.active_swap_keys.remove(keyid)
                 self.update_image()
