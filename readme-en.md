@@ -6,6 +6,14 @@ Supports jpg, png, webp files
 
 ![CompareViewer-image](docs/CompareViewer-image.jpg)
 
+> [!NOTE]
+> I'm currently refactoring and testing the “Multi” version, which supports simultaneous comparison of up to 7 screens.  
+> If you're interested, please give it a try.  
+> CompareViewerMulti.py  
+> Explanation of the significantly changed keyboard shortcuts for Multi support (only a partial list—please refer to the code for details)  
+> 2, 3, 4, 5, 6, 7  : Change the number of screens for simultaneous comparison  
+> Z, X, C, V, B, N  : Z: Swap screens 1 and 2; X: Swap screens 2 and 3... N: Swap screens 6 and 7 (multiple keys can be pressed simultaneously)  
+
 ## Features
 - Sequential preview of images in the same hierarchy with two images side by side  
 - Swap left and right images only while pressing down key or right mouse button, so that you can see the change points of the left and right images.  
